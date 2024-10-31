@@ -28,13 +28,13 @@ const App = () => {
       <Flowbite>
         {/* routes */}
         <Router>
-          <div className="">
-            <aside class="sticky top-0">
+          <div>
+            <aside className="sticky top-0">
               {/* Navbar is placed here to appear across all routes */}
               <NavbarComponent setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
             </aside>
             {/* Define Routes */}
-            <div className="">
+            <div>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

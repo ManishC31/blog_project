@@ -6,9 +6,9 @@ const bcrypt = require("bcryptjs");
 
 exports.registerUser = asyncHandler(async (req, res) => {
   try {
-    const { firstname, lastname, email, password, contact } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
-    if (!firstname || !email || !password || !contact) {
+    if (!firstname || !email || !password) {
       return ApiError(res, 400, "Please provide all fields");
     }
 
@@ -25,7 +25,6 @@ exports.registerUser = asyncHandler(async (req, res) => {
       lastname,
       email,
       password: encPassword,
-      contact,
     });
 
     // save profile image if present
@@ -68,8 +67,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true, // Makes the cookie inaccessible to JavaScript on the client side
-      secure: true, // Use this in production with HTTPS
-      sameSite: "Strict", // CSRF protection
       maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expiration in milliseconds - 7 days
     });
 

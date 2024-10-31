@@ -3,7 +3,7 @@ const { registerUser, loginUser, logoutUser } = require("../controllers/auth.con
 const { isLoggedIn } = require("../middlewares/auth.middleware");
 const router = express.Router();
 
-router.post("/create", registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", isLoggedIn, logoutUser);
 
