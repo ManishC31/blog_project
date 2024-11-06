@@ -1,18 +1,16 @@
-const poolDB = require("../config/db.config");
 const userModel = require("../models/user.model");
 const { ApiError } = require("../utils/responses");
 const jwt = require("jsonwebtoken");
 
 exports.isLoggedIn = async (req, res, next) => {
-  const client = await poolDB.connect();
   try {
-    const token = req.cookies["token"] || req.headers.authorization.split(" ")[1];
+    const token = req.cookies["token"] || req.headers.authorization && req.headers.authorization.split(" ")[1];
 
     if (!token) {
       return ApiError(res, 401, "No identity found");
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // check in db
     const userData = await userModel.findById(decoded.id);
@@ -28,8 +26,6 @@ exports.isLoggedIn = async (req, res, next) => {
   } catch (error) {
     console.log("isLoggedIn err:", error);
     return ApiError(res, 401, "No identity found");
-  } finally {
-    client.release();
   }
 };
 
